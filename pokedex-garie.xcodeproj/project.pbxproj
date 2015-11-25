@@ -54,14 +54,38 @@
 		06A8F8B71C05D1EC004C1341 /* pokedex-garie */ = {
 			isa = PBXGroup;
 			children = (
+				06A8F8CC1C05D203004C1341 /* Controller */,
+				06A8F8CB1C05D1F9004C1341 /* View */,
+				06A8F8CA1C05D1F4004C1341 /* Model */,
 				06A8F8B81C05D1EC004C1341 /* AppDelegate.swift */,
-				06A8F8BA1C05D1EC004C1341 /* ViewController.swift */,
 				06A8F8BC1C05D1EC004C1341 /* Main.storyboard */,
 				06A8F8BF1C05D1EC004C1341 /* Assets.xcassets */,
 				06A8F8C11C05D1EC004C1341 /* LaunchScreen.storyboard */,
 				06A8F8C41C05D1EC004C1341 /* Info.plist */,
 			);
 			path = "pokedex-garie";
+			sourceTree = "<group>";
+		};
+		06A8F8CA1C05D1F4004C1341 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		06A8F8CB1C05D1F9004C1341 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		06A8F8CC1C05D203004C1341 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				06A8F8BA1C05D1EC004C1341 /* ViewController.swift */,
+			);
+			name = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
