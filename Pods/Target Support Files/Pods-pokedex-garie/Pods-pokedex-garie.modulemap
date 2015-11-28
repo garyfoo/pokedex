@@ -1,0 +1,6 @@
+framework module Pods_pokedex_garie {
+  umbrella header "Pods-pokedex-garie-umbrella.h"
+
+  export *
+  module * { export * }
+}
