@@ -15,6 +15,10 @@ class PokemonDetailVC: UIViewController {
     or constructed as part of checking out a new pokemon.
     */
     var pokemon: Pokemon!
+    let attrs = [
+        NSForegroundColorAttributeName : UIColor.whiteColor(),
+        NSFontAttributeName : UIFont(name: "Helvetica Neue", size: 24)!
+    ]
     
     @IBOutlet weak var mainImg: UIImageView!
     @IBOutlet weak var descLbl: UILabel!
@@ -31,20 +35,38 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var additionalEvo: UIImageView!
     
     @IBOutlet weak var nextEvoLbl: UILabel!
+    @IBOutlet weak var pokeDetailsStack: UIStackView!
+    @IBOutlet weak var lineView: UIView!
+    @IBOutlet weak var nextEvoStack: UIStackView!
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        pokeDetailsStack.hidden = true
+        lineView.hidden = true
+        nextEvoStack.hidden = true
+        spinner.startAnimating()
+        let qos = Int(QOS_CLASS_USER_INITIATED.rawValue)
+        dispatch_async(dispatch_get_global_queue(qos, 0)) { () -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
+                self.pokemon.downloadPokemonDetails { () -> () in
+                    // This class will be called after download is done
+                    self.updateUI()
+                    self.spinner.stopAnimating()
+                    self.pokeDetailsStack.hidden = false
+                    self.lineView.hidden = false
+                    self.nextEvoStack.hidden = false
+                }
+            }
+        }
+        
+        //navigationController?.navigationBar.titleTextAttributes = attrs
         
         if let pokemon = pokemon {
-            navigationItem.title = pokemon.name
+            navigationItem.title = pokemon.name.capitalizedString
             let img = UIImage(named: "\(pokemon.pokedexId)")
             mainImg.image = img
             baseEvo.image = img
-            
-            pokemon.downloadPokemonDetails { () -> () in
-                // This class will be called after download is done
-                self.updateUI()
-            }
         }
 
         // Do any additional setup after loading the view.
@@ -56,7 +78,6 @@ class PokemonDetailVC: UIViewController {
     }
     
     @IBAction func back(sender: UIBarButtonItem) {
-        print("back btn pressed")
         navigationController!.popViewControllerAnimated(true)
     }
     
@@ -67,7 +88,13 @@ class PokemonDetailVC: UIViewController {
         defLbl.text = pokemon.defense
         weightLbl.text = pokemon.weight
         heightLbl.text = pokemon.height
-        pokedexId.text = "\(pokemon.pokedexId)"
+        if pokemon.pokedexId < 10 {
+            pokedexId.text = "#00\(pokemon.pokedexId)"
+        } else if pokemon.pokedexId < 100 {
+            pokedexId.text = "#0\(pokemon.pokedexId)"
+        } else {
+            pokedexId.text = "#\(pokemon.pokedexId)"
+        }
         if pokemon.nextEvoId == "" {
             nextEvoLbl.text = "No Evolutions"
             additionalEvo.hidden = true
@@ -83,6 +110,18 @@ class PokemonDetailVC: UIViewController {
         additionalEvo.image = UIImage(named: pokemon.nextEvoId)
     }
 
+    @IBAction func nextEvoDetails(sender: UITapGestureRecognizer) {
+        let poke = Pokemon(name: pokemon.nextEvoTxt, pokedexId: Int(pokemon.nextEvoId)!)
+        //performSegueWithIdentifier("PokemonDetailVC", sender: poke)
+        let vc = storyboard?.instantiateViewControllerWithIdentifier("PokemonDetailVC") as! PokemonDetailVC
+        vc.pokemon = poke
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func segmentChange(sender: UISegmentedControl) {
+    }
+    
+    
     /*
     // MARK: - Navigation
 

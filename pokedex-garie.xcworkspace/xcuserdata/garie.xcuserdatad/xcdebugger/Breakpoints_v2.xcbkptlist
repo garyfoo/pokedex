@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
-   type = "1"
+   type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
@@ -10,13 +10,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "pokedex-garie/PokemonDetailVC.swift"
-            timestampString = "470403908.111061"
+            timestampString = "470476376.532345"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "35"
-            endingLineNumber = "35"
-            landmarkName = "PokemonDetailVC"
-            landmarkType = "3">
+            startingLineNumber = "114"
+            endingLineNumber = "114"
+            landmarkName = "nextEvoDetails(_:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

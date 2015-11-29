@@ -105,7 +105,6 @@ class Pokemon {
     }
     
     func downloadPokemonDetails(completed: DownloadComplete) {
-        
         let url = NSURL(string: _pokemonUrl)!
         Alamofire.request(.GET, url).responseJSON { response in
             let result = response.result
@@ -113,10 +112,12 @@ class Pokemon {
             if let dict = result.value as? Dictionary<String, AnyObject> {
                 
                 if let weight = dict["weight"] as? String {
-                    self._weight = weight
+                    let kgConvert = Double(weight)! / 10
+                    self._weight = "\(kgConvert) kg"
                 }
                 if let height = dict["height"] as? String {
-                    self._height = height
+                    let heightConvert = Double(height)! / 10
+                    self._height = "\(heightConvert) m"
                 }
                 if let attack = dict["attack"] as? Int {
                     self._attack = "\(attack)"
@@ -126,19 +127,18 @@ class Pokemon {
                 }
                 if let types = dict["types"] as? [Dictionary<String, String>] where types.count > 0 {
                     if let name = types[0]["name"] {
-                        self._type = name
+                        self._type = name.capitalizedString
                     }
-                    else if types.count > 1 {
+                    if types.count > 1 {
                         for var x = 1; x < types.count; x++ {
                             if let name = types[x]["name"] {
-                                self._type! += " / \(name)"
+                                self._type! += " / \(name.capitalizedString)"
                             }
                         }
                     }
                 } else {
                     self._type = ""
                 }
-                print(self._type)
                 if let descArr = dict["descriptions"] as? [Dictionary<String, String>] where descArr.count > 0 {
                     if let url = descArr[0]["resource_uri"] {
                         let nsurl = NSURL(string: "\(URL_BASE)\(url)")!
@@ -149,11 +149,9 @@ class Pokemon {
                                 
                                 if let description = descDict["description"] as? String {
                                     self._description = description
-                                    print(self._description)
                                 }
                                 
                             }
-                            
                             completed()
                         }
                     }
@@ -181,17 +179,11 @@ class Pokemon {
                                 
                                 self._nextEvoTxt = evolutionTo
                                 self._nextEvoId = evoId
-                                
-                                print(self._nextEvoLvl)
-                                print(self._nextEvoTxt)
-                                print(self._nextEvoId)
                             }
                         }
                     }
                 }
             }
         }
-        
-        
     }
 }

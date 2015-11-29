@@ -27,7 +27,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
         // Change title font of navigation bar
-        self.navigationController?.navigationBar.titleTextAttributes = attrs
+        navigationController?.navigationBar.titleTextAttributes = attrs
         //navigationController?.navigationBar.barStyle = .Black
         collection.delegate = self
         collection.dataSource = self
@@ -121,7 +121,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(105, 105)
+        let cellSize: CGSize
+        if view.frame.width >= 375 {
+            cellSize = CGSizeMake(105, 105)
+        }
+        else {
+            cellSize = CGSizeMake(85, 85)
+        }
+        return cellSize
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
