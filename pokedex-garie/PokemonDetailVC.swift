@@ -40,6 +40,7 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var nextEvoStack: UIStackView!
     
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         pokeDetailsStack.hidden = true
@@ -68,7 +69,6 @@ class PokemonDetailVC: UIViewController {
             mainImg.image = img
             baseEvo.image = img
         }
-
         // Do any additional setup after loading the view.
     }
 

@@ -22,9 +22,17 @@ class Pokemon {
     private var _pokemonUrl: String!
     private var _nextEvoLvl: String!
     private var _nextEvoId: String!
+    private var _moves: String!
     
     var name: String! {
         return _name
+    }
+    
+    var moves: String! {
+        if _moves == nil {
+            _moves = ""
+        }
+        return _moves
     }
     
     var pokedexId: Int! {
@@ -139,6 +147,24 @@ class Pokemon {
                 } else {
                     self._type = ""
                 }
+            
+//                if let moves = dict["moves"] as? [Dictionary<String, AnyObject>] where moves.count > 0 {
+//                    
+//                    if let name = moves[0]["name"] {
+//                        self._moves = String(name)
+//                    }
+//                    if moves.count > 1 {
+//                        for var x = 1; x < 4; x++ {
+//                            if let name = moves[x]["name"] {
+//                                self._moves! += ",\(name.capitalizedString)"
+//                            }
+//                        }
+//                    }
+//                    print(self._moves)
+//                } else {
+//                    self._moves = ""
+//                }
+                
                 if let descArr = dict["descriptions"] as? [Dictionary<String, String>] where descArr.count > 0 {
                     if let url = descArr[0]["resource_uri"] {
                         let nsurl = NSURL(string: "\(URL_BASE)\(url)")!
